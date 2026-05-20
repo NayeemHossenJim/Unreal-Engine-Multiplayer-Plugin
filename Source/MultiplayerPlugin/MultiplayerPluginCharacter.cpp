@@ -11,6 +11,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "MultiplayerPlugin.h"
+#include "Kismet/GameplayStatics.h"
 
 AMultiplayerPluginCharacter::AMultiplayerPluginCharacter()
 {
@@ -130,4 +131,27 @@ void AMultiplayerPluginCharacter::DoJumpEnd()
 {
 	// signal the character to stop jumping
 	StopJumping();
+}
+
+void AMultiplayerPluginCharacter::OpenLobby()
+{
+	UWorld* World = GetWorld();
+	if(World)
+	{
+		World->ServerTravel("/Game/ThirdPerson/Maps/lobby?listen");
+	}
+}
+
+void AMultiplayerPluginCharacter::CallOpenLevel(const FString & Address)
+{
+	UGameplayStatics::OpenLevel(this, *Address);
+}
+
+void AMultiplayerPluginCharacter::CallClientTravel(const FString & Address)
+{
+	APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
+	if (PlayerController)
+	{
+		PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
+	}
 }
