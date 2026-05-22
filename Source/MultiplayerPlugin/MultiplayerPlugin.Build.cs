@@ -18,8 +18,10 @@ public class MultiplayerPlugin : ModuleRules
 			"StateTreeModule",
 			"GameplayStateTreeModule",
 			"UMG",
-			"Slate"
-		});
+			"Slate",
+            "OnlineSubsystem",
+            "OnlineSubsystemSteam"
+        });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 
